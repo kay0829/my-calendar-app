@@ -1,7 +1,7 @@
 function Calendar () {
     return (
         <>
-            <p className="text-indigo-600">hello</p>
+            <h1 className="text-3xl font-bold underline">Hello world!</h1>
         </>
     )
 }
