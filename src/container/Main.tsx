@@ -3,6 +3,7 @@ import React from "react";
 
 import Gnb from "@component/Main/Gnb";
 import Sidebar from "@component/Main/Sidebar";
+import Aside from "@component/Main/Aside";
 
 function Main() {
     return (
@@ -10,6 +11,7 @@ function Main() {
             <Gnb />
             <div className="flex-1 flex w-full">
                 <Sidebar />
+                <Aside />
             </div>
         </div>
     )
