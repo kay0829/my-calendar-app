@@ -5,8 +5,10 @@
     "paths": {
       "@/*": ["src/*"],
       "@api/*": ["src/api/*"],
+      "@asset/*": ["src/asset/*"],
       "@component/*": ["src/component/*"],
       "@container/*": ["src/container/*"],
+      "@styles/*": ["src/styles/*"],
     },
     "lib": [
       "dom",
