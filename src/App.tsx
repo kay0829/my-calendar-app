@@ -1,14 +1,21 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Calendar from '@container/Calendar';
+import Main from '@container/Main';
+import MainCalendar from '@/component/Main/MainCalendar';
 import ErrorPage from '@container/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Calendar />,
+    element: <Main />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/month",
+        element: <MainCalendar />,
+      },
+    ]
   },
 ]);
 
