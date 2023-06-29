@@ -52,6 +52,9 @@
     "@types/react-big-calendar": "^1.6.4",
     "@types/react-datepicker": "^4.11.2",
     "customize-cra": "^1.0.0",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^2.8.8",
     "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.3.2"
   }
