@@ -1,11 +1,11 @@
 import { useRouteError } from "react-router-dom";
 
 interface IError {
-  data: string;
-  error: Error;
-  internal: boolean;
-  status: number;
-  statusText: string;
+    data: string;
+    error: Error;
+    internal: boolean;
+    status: number;
+    statusText: string;
 }
 
 function ErrorPage() {
@@ -13,13 +13,13 @@ function ErrorPage() {
 
   return (
     <div>
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
-        {e.error ? (
-          <i>{e.statusText || e.error.message}</i>
-        ) : null}
-      </p>
+        <h1>Oops!</h1>
+        <p>Sorry, an unexpected error has occurred.</p>
+        <p>
+            {e.error ? (
+              <i>{e.statusText || e.error.message}</i>
+            ) : null}
+        </p>
     </div>
   );
 }
