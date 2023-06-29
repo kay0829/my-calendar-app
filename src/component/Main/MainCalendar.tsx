@@ -1,8 +1,12 @@
-import React, { useState, useCallback } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar'
+import React, { useState, useCallback, useEffect } from 'react';
+import { Calendar, momentLocalizer, EventProps } from 'react-big-calendar'
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import '@styles/Main/customMainCalendar.css';
+
+import { useAppDispatch, useAppSelector } from '@hooks/reduxWithType';
+
+import { formattingTime, getDateFromViewDate, getViewDateObj, isAnotherDate } from '@utils/formattingDate';
 
 moment.locale('ko-KR');
 const localizer = momentLocalizer(moment);
@@ -62,7 +66,18 @@ const events = [
 ]
 
 function MainCalendar() {
+    const { viewDate, drilldownView } = useAppSelector((state) => state.main);
+    const dispatch = useAppDispatch();
+
     const [myEvents, setEvents] = useState(events);
+    const [selectedDate, setSelectedDate] = useState(getDateFromViewDate(viewDate));
+
+    useEffect(() => {
+      const {year, month, date} = viewDate;
+      let temp = { year: year || moment().year().toString(), month: month || moment().month().toString(), date: date || moment().date().toString() };
+
+      setSelectedDate(getDateFromViewDate(temp));
+    }, [viewDate.year, viewDate.month, viewDate.date])
 
     const handleSelectSlot = useCallback(
       ({ start, end }: {start: Date, end: Date}) => {
@@ -80,6 +95,7 @@ function MainCalendar() {
     )
 
     const StyleNone = () => <></>;
+
     const DateHeader = ({label, date}: {label: string, date: Date}) => {
       const day = moment(date).format("M월 D일");
       const isToday = moment().format("YYYYMD") === `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`;
@@ -108,9 +124,44 @@ function MainCalendar() {
       )
     }
 
-    const EventElement = ({title}: {title: string}) => {
+    const EventElement = (props: EventProps) => {
+      const { title, event } = props;
+      const { allDay, resource, start, end } = event;
+
+      let classStr = 'flex align-center px-1 py-0.5 rounded text-xs font-normal ';
+      let bg = '';
+      let tx = '';
+
+
+      if (resource === 0) {
+        bg += 'bg-first';
+        tx += 'text-first';
+      } else if (resource === 1) {
+        bg += 'bg-second';
+        tx += 'text-second';
+      } else if (resource === 2) {
+        bg += 'bg-tertiary';
+        tx += 'text-tertiary';
+      }
+
+      if (allDay || isAnotherDate(start, end)) {
+        classStr += 'text-white';
+      } else {
+        classStr += 'text-primary';
+      }
+
       return (
-        <div>{title}</div>
+        <>
+          {allDay || isAnotherDate(start, end) ? (
+            <div className={`${classStr} ${bg}`}>{title}</div>
+          ) : (
+            <div className={classStr}>
+              <p className={tx}>⦁</p>
+              <p className='pr-1'>{formattingTime(start)}</p>
+              {title}
+            </div>
+          )}
+        </>
       )
     }
 
@@ -118,6 +169,9 @@ function MainCalendar() {
       <div className='h-full'>
           <Calendar
             localizer={localizer}
+            drilldownView={drilldownView || 'month'}
+            date={selectedDate}
+            onNavigate={(newDate) => setSelectedDate(newDate)}
             startAccessor="start"
             endAccessor="end"
             events={myEvents}
@@ -130,7 +184,7 @@ function MainCalendar() {
               month: {
                 header: MonthHeader,
                 dateHeader: DateHeader,
-                // event: EventElement,
+                event: EventElement,
               }
             }}
           />
