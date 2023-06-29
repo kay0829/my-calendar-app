@@ -16,7 +16,9 @@ function ErrorPage() {
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred.</p>
       <p>
-        <i>{e.statusText || e.error.message}</i>
+        {e.error ? (
+          <i>{e.statusText || e.error.message}</i>
+        ) : null}
       </p>
     </div>
   );

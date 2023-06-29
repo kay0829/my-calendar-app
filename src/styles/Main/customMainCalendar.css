@@ -1,0 +1,50 @@
+.rbc-calendar {
+    height: 100% !important;
+
+    .rbc-toolbar {
+        display: none;
+    }
+
+    .rbc-month-view {
+        border: none;
+
+        .rbc-month-header {
+            border: none;
+            padding: 4px 0;
+
+            .rbc-header {
+                border: none;
+            }
+
+            .rbc-header > p {
+                font-size: 11px;
+            }
+        }
+
+        .rbc-month-row {
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #e5e7eb;
+            
+            .rbc-row-content {
+                padding: 4px 0;
+
+                .rbc-row {
+                    .rbc-current {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    .rbc-row-segment {
+                        .rbc-event {
+                            padding: 0;
+                            background-color: transparent;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

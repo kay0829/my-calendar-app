@@ -1,20 +1,32 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import Calendar from '@container/Calendar';
+import { Provider } from 'react-redux';
+import { store } from './store';
+
+import Main from '@container/Main';
+import MainCalendar from '@/component/Main/MainCalendar';
 import ErrorPage from '@container/ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Calendar />,
+    element: <Main />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/:drilldownView/:year/:month/:date",
+        element: <MainCalendar />,
+      },
+    ]
   },
 ]);
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   );
 }
 
