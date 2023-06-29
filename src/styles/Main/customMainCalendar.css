@@ -36,6 +36,13 @@
                         justify-content: center;
                         align-items: center;
                     }
+
+                    .rbc-row-segment {
+                        .rbc-event {
+                            padding: 0;
+                            background-color: transparent;
+                        }
+                    }
                 }
             }
         }
