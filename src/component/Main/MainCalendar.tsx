@@ -26,40 +26,38 @@ interface IEvent {
     resource?: any;
 }
 
-
-
 const events = [
   {
     id: 0,
     allDay: false,
-    title: <p>Board meeting</p>,
+    title: <p>0Board meeting</p>,
     start: new Date(2023, 5, 24, 9, 0, 0),
     end: new Date(2023, 5, 24, 13, 0, 0),
-    resource: 1,
+    resource: 0,
   },
   {
     id: 1,
     allDay: false,
-    title: <p>Board meeting</p>,
+    title: <p>1Board meeting</p>,
     start: new Date(2023, 5, 23, 9, 0, 0),
     end: new Date(2023, 5, 24, 9, 0, 0),
-    resource: 2,
+    resource: 1,
   },
   {
     id: 2,
     allDay: false,
-    title: <p>Board meeting</p>,
+    title: <p>2Board meeting</p>,
     start: new Date(2023, 5, 10, 9, 0, 0),
     end: new Date(2023, 5, 11, 12, 0, 0),
-    resource: 3,
+    resource: 1,
   },
   {
     id: 11,
     allDay: false,
-    title: <p>Board meeting</p>,
-    start: new Date(2023, 5, 29, 9, 0, 0),
-    end: new Date(2023, 5, 29, 12, 0, 0),
-    resource: 4,
+    title: <p>3Board meeting</p>,
+    start: new Date(2023, 5, 29, 18, 0, 0),
+    end: new Date(2023, 5, 29, 19, 0, 0),
+    resource: 2,
   },
 ]
 
