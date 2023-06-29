@@ -2,12 +2,22 @@ import React from "react";
 import { BiMenu, BiChevronRight, BiChevronLeft } from 'react-icons/bi';
 import { HiOutlineSearch } from 'react-icons/hi';
 
+import { useAppDispatch, useAppSelector } from '@hooks/reduxWithType';
+import { changeViewDate, changeDrilldownView } from '@features/mainSlice';
+
 import Spacing from "@component/common/Spacing";
 
 import Calendar from "@asset/calendar.png";
 import UserProfile from "@asset/user-profile.png";
 
+import { getViewDateObj, getMomentFromViewDate } from "@utils/formattingDate";
+
+import moment from "moment";
+
 function Gnb() {
+    const { viewDate, drilldownView } = useAppSelector((state) => state.main);
+    const dispatch = useAppDispatch();
+
     const GNBLeft = () => {
         return (
             <>
@@ -35,34 +45,63 @@ function Gnb() {
     const ChangeMonthBtns = () => {
         return (
             <div className="flex items-center">
-                <button className="border rounded px-3.5 py-1.5 border-slate-300">
+                <button
+                    onClick={() => dispatch(changeViewDate(getViewDateObj(moment().format())))}
+                    className="border rounded px-3.5 py-1.5 border-slate-300"
+                >
                     <span className="text-sm">오늘</span>
                 </button>
                 <Spacing space="mr-2"/>
-                <button className="px-1">
+                <button
+                    className="px-1"
+                    onClick={() => {
+                        const momentDate = getMomentFromViewDate(viewDate);
+                        const prevMonth = momentDate.subtract(1, 'month').startOf('month').format();
+                        dispatch(changeViewDate(getViewDateObj(prevMonth)));
+                    }}
+                >
                     <BiChevronLeft size="1.5rem" title="전 달"/>
                 </button>
-                <button className="px-1">
+                <button
+                    className="px-1"
+                    onClick={() => {
+                        const momentDate = getMomentFromViewDate(viewDate);
+                        const nextMonth = momentDate.add(1, 'month').startOf('month').format();
+                        dispatch(changeViewDate(getViewDateObj(nextMonth)));
+                    }}
+                >
                     <BiChevronRight size="1.5rem" title="다음 달" />
                 </button>
                 <Spacing space="mr-2"/>
-                <span className="text-xl">2023년 6월</span>
+                <span className="text-xl">{`${viewDate.year}년 ${viewDate.month}월`}</span>
             </div>
         )
     }
 
     const ChangeCriteriaBtn = () => {
+        const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+            const { value } = e.currentTarget;
+
+            if (value === 'month' || value === 'week' || value === 'day') {
+                dispatch(changeDrilldownView(value));
+            }
+        }
+
         return (
             <div className="flex items-center">
                 <button>
                     <HiOutlineSearch />
                 </button>
                 <Spacing space="mr-3"/>
-                {/* TODO */}
-                <select defaultValue="월" className="border rounded px-3 py-1 border-slate-300 font-sm">
-                    <option value="월">월</option>
-                    <option value="주">주</option>
-                    <option value="일">일</option>
+                {/* TODO CSS */}
+                <select
+                    className="border rounded px-3 py-1 border-slate-300 font-sm"
+                    onChange={handleSelect}
+                    value={drilldownView || 'month'}
+                >
+                    <option value="month">월</option>
+                    <option value="week">주</option>
+                    <option value="day">일</option>
                 </select>
             </div>
         )
