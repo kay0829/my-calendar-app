@@ -120,7 +120,7 @@ function MainCalendar() {
         const DayElement = () => {
             if (isToday) {
                 return (
-                    <div className="bg-selected w-fit p-1 rounded-full cursor-pointer hover:bg-blue-600">
+                    <div className="flex justify-center items-center bg-selected w-5 h-5 p-1 rounded-full cursor-pointer hover:bg-blue-600">
                         <p className="text-xs text-center text-white font-normal">{Number.parseInt(label)}</p>
                     </div>
                 );
