@@ -10,6 +10,7 @@ type IDrilldownView = "month" | "week" | "work_week" | "day" | "agenda";
 interface MainState {
     viewDate: IViewDate;
     drilldownView: IDrilldownView | null | undefined;
+    isOpen: boolean;
 }
 
 const initialState: MainState = {
@@ -19,6 +20,7 @@ const initialState: MainState = {
         date: "",
     },
     drilldownView: "month",
+    isOpen: false,
 };
 
 const mainSlice = createSlice({
@@ -34,8 +36,19 @@ const mainSlice = createSlice({
         ) {
             state.drilldownView = action.payload;
         },
+        openModal(state) {
+            state.isOpen = true;
+        },
+        closeModal(state) {
+            state.isOpen = false;
+        },
     },
 });
 
-export const { changeViewDate, changeDrilldownView } = mainSlice.actions;
+export const {
+    changeViewDate,
+    changeDrilldownView,
+    openModal,
+    closeModal,
+} = mainSlice.actions;
 export default mainSlice.reducer;
