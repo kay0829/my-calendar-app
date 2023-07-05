@@ -1,10 +1,18 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Calendar, momentLocalizer, EventProps } from "react-big-calendar";
+import {
+    Calendar,
+    momentLocalizer,
+    EventProps,
+    SlotInfo,
+} from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "@styles/Main/customMainCalendar.css";
 
-import { useAppSelector } from "@hooks/reduxWithType";
+import { useAppDispatch, useAppSelector } from "@hooks/reduxWithType";
+import { openModal, setNewEvent } from "@features/mainSlice";
+
+import EventAddModal from "@component/Main/MainCalendar/EventAddModal";
 
 import {
     formattingTime,
@@ -71,6 +79,7 @@ const events = [
 
 function MainCalendar() {
     const { viewDate, drilldownView } = useAppSelector((state) => state.main);
+    const dispatch = useAppDispatch();
 
     const [myEvents, setEvents] = useState(events);
     const [selectedDate, setSelectedDate] = useState(
@@ -89,29 +98,31 @@ function MainCalendar() {
     }, [viewDate.year, viewDate.month, viewDate.date]);
 
     const handleSelectSlot = useCallback(
-        ({ start, end }: { start: Date, end: Date }) => {
-            const title = window.prompt("New Event name");
-            if (title) {
-                setEvents([
-                    ...myEvents,
-                    {
-                        id: myEvents.length + 1,
-                        allDay: false,
-                        start,
-                        end,
-                        title: <p>{title}</p>,
-                        resource: myEvents.length + 1,
-                    },
-                ]);
+        (slotInfo: SlotInfo) => {
+            const { start, end, action, box } = slotInfo;
+            // TODO: double click action
+            console.log(action, start, end);
+
+            const temp = {
+                id: myEvents.length + 1,
+                allDay: true,
+                start,
+                end,
+                title: <p>{"(제목 없음)"}</p>,
+                resource: myEvents.length + 1,
+            };
+            if (action === "click") {
+                dispatch(openModal());
+                dispatch(setNewEvent(temp));
+                console.log(box);
             }
         },
         [setEvents],
     );
 
-    const handleSelectEvent = useCallback(
-        (event: IEvent) => window.alert(event.title),
-        [],
-    );
+    const handleSelectEvent = useCallback((event: IEvent) => {
+        window.alert(event.title);
+    }, []);
 
     const StyleNone = () => <></>;
 
@@ -219,6 +230,7 @@ function MainCalendar() {
                     },
                 }}
             />
+            <EventAddModal />
         </div>
     );
 }
