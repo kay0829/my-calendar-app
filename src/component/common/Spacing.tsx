@@ -5,10 +5,8 @@ import React from "react";
  * @param space margin 관련 tailwindcss
  * @returns 마진 크기만큼의 div
  */
-function Spacing({space}: {space: string}) {
-    return (
-        <div className={`w-0 h-full ${space}`}></div>
-    )
+function Spacing({ space }: { space: string }) {
+    return <div className={`w-0 h-full ${space}`}></div>;
 }
 
 export default Spacing;

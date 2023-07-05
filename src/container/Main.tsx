@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from '@hooks/reduxWithType';
+import { useAppDispatch, useAppSelector } from "@hooks/reduxWithType";
 import { changeViewDate, changeDrilldownView } from "@/features/mainSlice";
 
 import { Outlet } from "react-router-dom";
@@ -10,6 +10,7 @@ import { Outlet } from "react-router-dom";
 import Gnb from "@component/Main/Gnb";
 import Sidebar from "@component/Main/Sidebar";
 import Aside from "@component/Main/Aside";
+import EventAddModal from "@component/Main/MainCalendar/EventAddModal";
 
 import { getViewDateObj, isDiffBetweenViewDateAndPathDate } from "@/utils/formattingDate";
 
@@ -21,7 +22,11 @@ function Main() {
 
     const navigate = useNavigate();
     const params = useParams();
-    const pathDate = { year: params.year || '', month: params.month || '', date: params.date || '' };
+    const pathDate = {
+        year: params.year || "",
+        month: params.month || "",
+        date: params.date || "",
+    };
 
     useEffect(() => {
         // Case 1. url이 수정되는 경우
@@ -30,7 +35,7 @@ function Main() {
             const today = moment().format();
             const temp = getViewDateObj(today);
 
-            dispatch(changeDrilldownView('month'));
+            dispatch(changeDrilldownView("month"));
             dispatch(changeViewDate(temp));
             return;
         }
@@ -41,25 +46,29 @@ function Main() {
         }
 
         // Case 1 - 3. url에서 drilldownView 부분이 다른 경우 -> state 수정
-        if (drilldownView !== params.drilldownView 
-            && (params.drilldownView === 'month' 
-                || params.drilldownView === 'week'
-                || params.drilldownView === 'day')
-            ) {
+        if (
+            drilldownView !== params.drilldownView &&
+            (params.drilldownView === "month" || params.drilldownView === "week" || params.drilldownView === "day")
+        ) {
             dispatch(changeDrilldownView(drilldownView));
         }
 
         // Case 1 - 4. url에서 날짜 부분이 다른 경우 -> state 수정
         if (isDiffBetweenViewDateAndPathDate(viewDate, pathDate)) {
-            dispatch(changeViewDate({ year: pathDate.year, month: pathDate.month, date: pathDate.date }));
+            dispatch(
+                changeViewDate({
+                    year: pathDate.year,
+                    month: pathDate.month,
+                    date: pathDate.date,
+                }),
+            );
         }
-
-    }, [drilldownView, params.year, params.month, params.pathDate])
+    }, [drilldownView, params.year, params.month, params.pathDate]);
 
     useEffect(() => {
         // Case 2. state를 수정하는 경우
         navigate(`${drilldownView}/${viewDate.year}/${viewDate.month}/${viewDate.date}`);
-    }, [drilldownView, viewDate.year, viewDate.month, viewDate.date])
+    }, [drilldownView, viewDate.year, viewDate.month, viewDate.date]);
 
     return (
         <div className="box-border font-sans text-primary w-screen h-screen flex flex-col">
@@ -71,8 +80,9 @@ function Main() {
                 </div>
                 <Aside />
             </div>
+            <EventAddModal />
         </div>
-    )
+    );
 }
 
 export default Main;
