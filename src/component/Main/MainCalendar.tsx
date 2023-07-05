@@ -230,7 +230,6 @@ function MainCalendar() {
                     },
                 }}
             />
-            <EventAddModal />
         </div>
     );
 }

@@ -10,6 +10,7 @@ import { Outlet } from "react-router-dom";
 import Gnb from "@component/Main/Gnb";
 import Sidebar from "@component/Main/Sidebar";
 import Aside from "@component/Main/Aside";
+import EventAddModal from "@component/Main/MainCalendar/EventAddModal";
 
 import { getViewDateObj, isDiffBetweenViewDateAndPathDate } from "@/utils/formattingDate";
 
@@ -79,6 +80,7 @@ function Main() {
                 </div>
                 <Aside />
             </div>
+            <EventAddModal />
         </div>
     );
 }
