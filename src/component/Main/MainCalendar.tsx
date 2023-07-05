@@ -1,10 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import {
-    Calendar,
-    momentLocalizer,
-    EventProps,
-    SlotInfo,
-} from "react-big-calendar";
+import { Calendar, momentLocalizer, EventProps, SlotInfo } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "@styles/Main/customMainCalendar.css";
@@ -12,13 +7,7 @@ import "@styles/Main/customMainCalendar.css";
 import { useAppDispatch, useAppSelector } from "@hooks/reduxWithType";
 import { openModal, setNewEvent } from "@features/mainSlice";
 
-import EventAddModal from "@component/Main/MainCalendar/EventAddModal";
-
-import {
-    formattingTime,
-    getDateFromViewDate,
-    isAnotherDate,
-} from "@utils/formattingDate";
+import { formattingTime, getDateFromViewDate, isAnotherDate } from "@utils/formattingDate";
 
 moment.locale("ko-KR");
 const localizer = momentLocalizer(moment);
@@ -82,9 +71,7 @@ function MainCalendar() {
     const dispatch = useAppDispatch();
 
     const [myEvents, setEvents] = useState(events);
-    const [selectedDate, setSelectedDate] = useState(
-        getDateFromViewDate(viewDate),
-    );
+    const [selectedDate, setSelectedDate] = useState(getDateFromViewDate(viewDate));
 
     useEffect(() => {
         const { year, month, date } = viewDate;
@@ -128,25 +115,19 @@ function MainCalendar() {
 
     const DateHeader = ({ label, date }: { label: string, date: Date }) => {
         const day = moment(date).format("M월 D일");
-        const isToday =
-            moment().format("YYYYMD") ===
-            `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`;
+        const isToday = moment().format("YYYYMD") === `${date.getFullYear()}${date.getMonth() + 1}${date.getDate()}`;
 
         const DayElement = () => {
             if (isToday) {
                 return (
                     <div className="bg-selected w-fit p-1 rounded-full cursor-pointer hover:bg-blue-600">
-                        <p className="text-xs text-center text-white font-normal">
-                            {Number.parseInt(label)}
-                        </p>
+                        <p className="text-xs text-center text-white font-normal">{Number.parseInt(label)}</p>
                     </div>
                 );
             }
 
             return (
-                <p className="text-xs text-center cursor-pointer">
-                    {label === "01" ? day : Number.parseInt(label)}
-                </p>
+                <p className="text-xs text-center cursor-pointer">{label === "01" ? day : Number.parseInt(label)}</p>
             );
         };
 
@@ -170,8 +151,7 @@ function MainCalendar() {
         const { title, event } = props;
         const { allDay, resource, start, end } = event;
 
-        let classStr =
-            "flex align-center px-1 py-0.5 rounded text-xs font-normal ";
+        let classStr = "flex align-center px-1 py-0.5 rounded text-xs font-normal ";
         let bg = "";
         let tx = "";
 
