@@ -11,10 +11,7 @@ import Gnb from "@component/Main/Gnb";
 import Sidebar from "@component/Main/Sidebar";
 import Aside from "@component/Main/Aside";
 
-import {
-    getViewDateObj,
-    isDiffBetweenViewDateAndPathDate,
-} from "@/utils/formattingDate";
+import { getViewDateObj, isDiffBetweenViewDateAndPathDate } from "@/utils/formattingDate";
 
 import moment from "moment";
 
@@ -33,12 +30,7 @@ function Main() {
     useEffect(() => {
         // Case 1. url이 수정되는 경우
         // Case 1 - 1. url 을 정상적으로 입력하지 않은 경우 -> 오늘 날짜로 수정 및 이동
-        if (
-            !params.drilldownView ||
-            !params.year ||
-            !params.month ||
-            !params.date
-        ) {
+        if (!params.drilldownView || !params.year || !params.month || !params.date) {
             const today = moment().format();
             const temp = getViewDateObj(today);
 
@@ -48,19 +40,14 @@ function Main() {
         }
 
         // Case 1 - 2. url이 기존과 동일할 경우 -> 수정 필요 없음
-        if (
-            drilldownView === params.drilldownView &&
-            !isDiffBetweenViewDateAndPathDate(viewDate, pathDate)
-        ) {
+        if (drilldownView === params.drilldownView && !isDiffBetweenViewDateAndPathDate(viewDate, pathDate)) {
             return;
         }
 
         // Case 1 - 3. url에서 drilldownView 부분이 다른 경우 -> state 수정
         if (
             drilldownView !== params.drilldownView &&
-            (params.drilldownView === "month" ||
-                params.drilldownView === "week" ||
-                params.drilldownView === "day")
+            (params.drilldownView === "month" || params.drilldownView === "week" || params.drilldownView === "day")
         ) {
             dispatch(changeDrilldownView(drilldownView));
         }
@@ -79,9 +66,7 @@ function Main() {
 
     useEffect(() => {
         // Case 2. state를 수정하는 경우
-        navigate(
-            `${drilldownView}/${viewDate.year}/${viewDate.month}/${viewDate.date}`,
-        );
+        navigate(`${drilldownView}/${viewDate.year}/${viewDate.month}/${viewDate.date}`);
     }, [drilldownView, viewDate.year, viewDate.month, viewDate.date]);
 
     return (

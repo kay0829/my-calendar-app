@@ -46,11 +46,7 @@ function Gnb() {
         return (
             <div className="flex items-center">
                 <button
-                    onClick={() =>
-                        dispatch(
-                            changeViewDate(getViewDateObj(moment().format())),
-                        )
-                    }
+                    onClick={() => dispatch(changeViewDate(getViewDateObj(moment().format())))}
                     className="border rounded px-3.5 py-1.5 border-slate-300"
                 >
                     <span className="text-sm">오늘</span>
@@ -60,10 +56,7 @@ function Gnb() {
                     className="px-1"
                     onClick={() => {
                         const momentDate = getMomentFromViewDate(viewDate);
-                        const prevMonth = momentDate
-                            .subtract(1, "month")
-                            .startOf("month")
-                            .format();
+                        const prevMonth = momentDate.subtract(1, "month").startOf("month").format();
                         dispatch(changeViewDate(getViewDateObj(prevMonth)));
                     }}
                 >
@@ -73,17 +66,15 @@ function Gnb() {
                     className="px-1"
                     onClick={() => {
                         const momentDate = getMomentFromViewDate(viewDate);
-                        const nextMonth = momentDate
-                            .add(1, "month")
-                            .startOf("month")
-                            .format();
+                        const nextMonth = momentDate.add(1, "month").startOf("month").format();
+                        console.log("next month", nextMonth);
                         dispatch(changeViewDate(getViewDateObj(nextMonth)));
                     }}
                 >
                     <BiChevronRight size="1.5rem" title="다음 달" />
                 </button>
                 <Spacing space="mr-2" />
-                <span className="text-xl">{`${viewDate.year}년 ${viewDate.month}월`}</span>
+                <h1 className="text-xl">{`${viewDate.year}년 ${viewDate.month}월`}</h1>
             </div>
         );
     };
@@ -118,7 +109,7 @@ function Gnb() {
     };
 
     return (
-        <div className="flex justify-between items-center w-full h-14 p-2 border-b">
+        <header className="flex justify-between items-center w-full h-14 p-2 border-b">
             <div className="flex items-center flex-none">
                 <GNBLeft />
             </div>
@@ -135,7 +126,7 @@ function Gnb() {
             <div className="flex items-center flex-none">
                 <GNBRight />
             </div>
-        </div>
+        </header>
     );
 }
 
