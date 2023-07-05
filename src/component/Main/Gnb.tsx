@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/reduxWithType";
 import { changeViewDate, changeDrilldownView } from "@features/mainSlice";
 
 import Spacing from "@component/common/Spacing";
+import CSelect from "../common/CSelect";
 
 import Calendar from "@asset/calendar.png";
 import UserProfile from "@asset/user-profile.png";
@@ -13,6 +14,8 @@ import UserProfile from "@asset/user-profile.png";
 import { getViewDateObj, getMomentFromViewDate } from "@utils/formattingDate";
 
 import moment from "moment";
+
+import { drilldownViewOptions } from "@utils/optionsData";
 
 function Gnb() {
     const { viewDate, drilldownView } = useAppSelector((state) => state.main);
@@ -95,15 +98,13 @@ function Gnb() {
                 </button>
                 <Spacing space="mr-3" />
                 {/* TODO CSS */}
-                <select
-                    className="border rounded px-3 py-1 border-slate-300 font-sm"
-                    onChange={handleSelect}
+                <CSelect
+                    design="button"
+                    defaultValue="month"
                     value={drilldownView || "month"}
-                >
-                    <option value="month">월</option>
-                    <option value="week">주</option>
-                    <option value="day">일</option>
-                </select>
+                    handleChange={handleSelect}
+                    options={drilldownViewOptions}
+                />
             </div>
         );
     };
