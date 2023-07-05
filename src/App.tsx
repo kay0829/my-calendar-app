@@ -15,7 +15,7 @@ const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                path: "/:drilleddownView/:year/:month/:date",
+                path: "/:drilldownView/:year/:month/:date",
                 element: <MainCalendar />,
             },
         ],
