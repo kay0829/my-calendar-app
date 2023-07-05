@@ -70,7 +70,7 @@ function Gnb() {
                     onClick={() => {
                         const momentDate = getMomentFromViewDate(viewDate);
                         const nextMonth = momentDate.add(1, "month").startOf("month").format();
-                        console.log("next month", nextMonth);
+
                         dispatch(changeViewDate(getViewDateObj(nextMonth)));
                     }}
                 >
