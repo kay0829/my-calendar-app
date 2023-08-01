@@ -1,0 +1,73 @@
+# 주석 출처: https://solo5star.tistory.com/36
+# github 레파지토리: https://github.com/peaceiris/actions-gh-pages
+
+# name: workflow 이름
+name: My Calendar App Deploy
+
+# on: workflow가 실행될 조건
+on:
+  # 즉, develop 브랜치에 푸시가 될 때마다 실행
+  push:
+    branches: ['develop']
+
+  # workflow를 수동으로 실행할 수 있도록 하는 옵션
+  workflow_dispatch:
+
+# 하나의 workflow는 여러 개의 job으로 구성되어 있으며,
+# 기본적으로 병렬로 수행되지만 needs를 추가하면 특정 job이 끝난 후에 수행 가능
+jobs:
+  deploy:
+    # runs-on: 실행할 환경
+    runs-on: ubuntu-latest
+    # permissions: workflow에 권한 추가
+    permissions:
+      contents: write
+    # concurrency: 동시성과 관련한 옵션
+   
+    concurrency:
+      # group: 은 키 값이 되며, 동시에 한 번만 실행
+      group: ${{ github.workflow }}
+      # 빌드는 최신을 기준으로만 진행하면 되기에 이전에 실행중인 작업이 있을 때 취소하도록 설정
+      cancel-in-progress: true
+
+    # 하나의 job은 여러 개의 step으로 구성되며, 순차적으로 실행
+    steps:
+      # 레포지토리의 소스 코드를 사용하는 step입니다. 이게 없으면 빈 폴더
+      - name: Use repository source
+        uses: actions/checkout@v3
+
+      # node.js 런타임을 사용
+      - name: Use node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # 프로젝트에서 사용하는 노드 버전 지정
+
+      # node_modules 폴더 캐싱
+      # 이게 없으면 workflow를 실행할 때 마다 node_modules를 다시 생성
+      - name: Cache node_modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+        # cache hit이 발생한 경우 (즉 package-lock.json이 변경되지 않은 경우)
+        # npm ci 실행은 skip
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      # 빌드를 수행 # index.html 을 복사하여 404.html에서도 사용
+      - name: Build
+        run: |
+          npm run build
+          cp ./build/index.html ./build/404.html
+
+      # 빌드된 파일들(./build)을 gh-pages 브랜치로 배포합니다.
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build

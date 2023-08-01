@@ -31,7 +31,7 @@
                 padding: 4px 0;
 
                 .rbc-row {
-                    .rbc-current {
+                    .rbc-now {
                         display: flex;
                         justify-content: center;
                         align-items: center;
