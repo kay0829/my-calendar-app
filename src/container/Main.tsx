@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -63,12 +63,13 @@ function Main() {
                 }),
             );
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [drilldownView, params.year, params.month, params.pathDate]);
 
     useEffect(() => {
         // Case 2. state를 수정하는 경우
         navigate(`${drilldownView}/${viewDate.year}/${viewDate.month}/${viewDate.date}`);
-    }, [drilldownView, viewDate.year, viewDate.month, viewDate.date]);
+    }, [navigate, drilldownView, viewDate.year, viewDate.month, viewDate.date]);
 
     return (
         <div className="box-border font-sans text-primary w-screen h-screen flex flex-col">
