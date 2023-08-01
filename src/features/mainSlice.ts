@@ -1,4 +1,3 @@
-import moment from "moment";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type IViewDate = {
@@ -45,10 +44,7 @@ const mainSlice = createSlice({
         changeViewDate(state, action: PayloadAction<IViewDate>) {
             state.viewDate = action.payload;
         },
-        changeDrilldownView(
-            state,
-            action: PayloadAction<IDrilldownView | null | undefined>,
-        ) {
+        changeDrilldownView(state, action: PayloadAction<IDrilldownView | null | undefined>) {
             state.drilldownView = action.payload;
         },
         openModal(state) {
@@ -63,11 +59,5 @@ const mainSlice = createSlice({
     },
 });
 
-export const {
-    changeViewDate,
-    changeDrilldownView,
-    openModal,
-    closeModal,
-    setNewEvent,
-} = mainSlice.actions;
+export const { changeViewDate, changeDrilldownView, openModal, closeModal, setNewEvent } = mainSlice.actions;
 export default mainSlice.reducer;

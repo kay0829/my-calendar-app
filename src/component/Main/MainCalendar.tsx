@@ -72,9 +72,9 @@ function MainCalendar() {
 
     const [myEvents, setEvents] = useState(events);
     const [selectedDate, setSelectedDate] = useState(getDateFromViewDate(viewDate));
+    const { year, month, date } = viewDate;
 
     useEffect(() => {
-        const { year, month, date } = viewDate;
         let temp = {
             year: year || moment().year().toString(),
             month: month || moment().month().toString(),
@@ -82,7 +82,7 @@ function MainCalendar() {
         };
 
         setSelectedDate(getDateFromViewDate(temp));
-    }, [viewDate.year, viewDate.month, viewDate.date]);
+    }, [year, month, date]);
 
     const handleSelectSlot = useCallback(
         (slotInfo: SlotInfo) => {
@@ -104,11 +104,12 @@ function MainCalendar() {
                 console.log(box);
             }
         },
-        [setEvents],
+        [dispatch, myEvents.length],
     );
 
     const handleSelectEvent = useCallback((event: IEvent) => {
         window.alert(event.title);
+        setEvents(events);
     }, []);
 
     const StyleNone = () => <></>;

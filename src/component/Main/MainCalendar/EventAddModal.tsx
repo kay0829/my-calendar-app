@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@hooks/reduxWithType";
-import { closeModal, setNewEvent } from "@features/mainSlice";
+import { closeModal } from "@features/mainSlice";
 
 import CCheckBox from "@/component/common/CCheckBox";
 import CSelect from "@/component/common/CSelect";
@@ -18,7 +18,7 @@ import { timeOptions } from "@/utils/optionsData";
 
 function EventAddModal() {
     const { isOpen, newEvent } = useAppSelector((state) => state.main);
-    const { start, end } = newEvent;
+    const { start } = newEvent;
     const dispatch = useAppDispatch();
 
     const [eventTitle, setEventTitle] = useState("");
