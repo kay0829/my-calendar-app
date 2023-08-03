@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useAppDispatch } from "@hooks/reduxWithType";
 import { openModal } from "@features/mainSlice";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { BiMenu, BiChevronRight, BiChevronLeft } from "react-icons/bi";
 import { HiOutlineSearch } from "react-icons/hi";
 

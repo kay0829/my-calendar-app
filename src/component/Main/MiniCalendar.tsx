@@ -1,4 +1,3 @@
-import React from "react";
 import DatePicker, { registerLocale } from "react-datepicker";
 import ko from "date-fns/locale/ko";
 import { getMonth, getYear } from "date-fns";
@@ -12,11 +11,7 @@ import { BiChevronRight, BiChevronLeft } from "react-icons/bi";
 
 import Spacing from "@component/common/Spacing";
 
-import {
-    getViewDateObj,
-    getMomentFromViewDate,
-    getDateFromViewDate,
-} from "@utils/formattingDate";
+import { getViewDateObj, getMomentFromViewDate, getDateFromViewDate } from "@utils/formattingDate";
 
 registerLocale("ko", ko);
 export interface ICustomHeader {
@@ -29,11 +24,7 @@ function MiniCalendar() {
     const { viewDate } = useAppSelector((state) => state.main);
     const dispatch = useAppDispatch();
 
-    const CustomHeader = ({
-        date,
-        decreaseMonth,
-        increaseMonth,
-    }: ICustomHeader) => {
+    const CustomHeader = ({ date, decreaseMonth, increaseMonth }: ICustomHeader) => {
         return (
             <div className="flex justify-between px-2 font-sans">
                 <div className="flex">
@@ -48,10 +39,7 @@ function MiniCalendar() {
                             decreaseMonth();
 
                             const momentDate = getMomentFromViewDate(viewDate);
-                            const prevMonth = momentDate
-                                .subtract(1, "month")
-                                .startOf("month")
-                                .format();
+                            const prevMonth = momentDate.subtract(1, "month").startOf("month").format();
                             dispatch(changeViewDate(getViewDateObj(prevMonth)));
                         }}
                     >
@@ -63,10 +51,7 @@ function MiniCalendar() {
                             increaseMonth();
 
                             const momentDate = getMomentFromViewDate(viewDate);
-                            const nextMonth = momentDate
-                                .add(1, "month")
-                                .startOf("month")
-                                .format();
+                            const nextMonth = momentDate.add(1, "month").startOf("month").format();
                             dispatch(changeViewDate(getViewDateObj(nextMonth)));
                         }}
                     >
@@ -92,13 +77,7 @@ function MiniCalendar() {
                 inline // input을 클릭하여 달력을 띄우는 것이 아닌 달력만 보이도록 하는 속성
                 renderCustomHeader={(
                     { date, decreaseMonth, increaseMonth }, // *년 *월 부분의 Header를 커스텀하게
-                ) => (
-                    <CustomHeader
-                        date={date}
-                        decreaseMonth={decreaseMonth}
-                        increaseMonth={increaseMonth}
-                    />
-                )}
+                ) => <CustomHeader date={date} decreaseMonth={decreaseMonth} increaseMonth={increaseMonth} />}
             />
         </div>
     );
