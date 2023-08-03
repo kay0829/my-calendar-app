@@ -24,7 +24,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@types/react-big-calendar": "^1.6.4",
